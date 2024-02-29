@@ -22,13 +22,11 @@ const support = {
       icon: icons.ChromeOutlined
     },
     {
-      id: 'documentation',
-      title: 'Documentation',
+      id: 'chat',
+      title: 'Chat',
       type: 'item',
-      url: 'https://codedthemes.gitbook.io/mantis/',
-      icon: icons.QuestionOutlined,
-      external: true,
-      target: true
+      url: '/chat',
+      icon: icons.QuestionOutlined
     }
   ]
 };

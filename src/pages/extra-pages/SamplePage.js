@@ -1,20 +1,58 @@
-// material-ui
-import { Typography } from '@mui/material';
+import React, { useState } from 'react';
+import TextInput from './components/TextInput'; 
+import FileInput from './components/FileInput'; 
+import SelectInput from './components/SelectInput'; // Adjust the path as necessary
+import { Button, Box } from '@mui/material';
 
-// project import
-import MainCard from 'components/MainCard';
+const SamplePage = () => {
+  const [inputConfig, setInputConfig] = useState({
+    prompt: '',
+    folderPath: ''
+  });
+  const [selectedLLM, setSelectedLLM] = useState('llama2');
+  const [outputConfig, setOutputConfig] = useState('');
 
-// ==============================|| SAMPLE PAGE ||============================== //
+  const llmOptions = [{ value: 'llama2', label: 'LLaMA 2 13b'}, { value: 'mistral', label: 'Mixtral 8x7b' }]; // Add more options as needed
 
-const SamplePage = () => (
-  <MainCard title="Sample Card">
-    <Typography variant="body2">
-      Lorem ipsum dolor sit amen, consenter nipissing eli, sed do elusion tempos incident ut laborers et doolie magna alissa. Ut enif ad
-      minim venice, quin nostrum exercitation illampu laborings nisi ut liquid ex ea commons construal. Duos aube grue dolor in reprehended
-      in voltage veil esse colum doolie eu fujian bulla parian. Exceptive sin ocean cuspidate non president, sunk in culpa qui officiate
-      descent molls anim id est labours.
-    </Typography>
-  </MainCard>
-);
+  const handleChange = (name) => (event) => {
+    setInputConfig({ ...inputConfig, [name]: event.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Submitting:', { inputConfig, selectedLLM, outputConfig });
+  };
+
+  return (
+    <Box sx={{ padding: 3 }}>
+      <h1>LLM Pipeline Configuration</h1>
+      <form onSubmit={handleSubmit}>
+        <TextInput
+          label="Input Prompt"
+          value={inputConfig.prompt}
+          onChange={handleChange('prompt')}
+        />
+        <FileInput
+          label="Input Folder"
+          onChange={(files) => setInputConfig({ ...inputConfig, folderPath: files[0] })}
+        />
+        <SelectInput
+          label="Select LLM"
+          value={selectedLLM}
+          onChange={(e) => setSelectedLLM(e.target.value)}
+          options={llmOptions}
+        />
+        <TextInput
+          label="Output Configuration"
+          value={outputConfig}
+          onChange={(e) => setOutputConfig(e.target.value)}
+        />
+        <Button variant="contained" type="submit" sx={{ mt: 2 }}>
+          Submit Pipeline
+        </Button>
+      </form>
+    </Box>
+  );
+};
 
 export default SamplePage;
